@@ -1,0 +1,11 @@
+{
+  "name": "Bitbucket Cloud build status",
+  "summary": "Posts a build state to a Bitbucket Cloud commit with an OAuth consumer and reads the status back before calling it done.",
+  "author": "hummerstudio",
+  "license": "MIT",
+  "tags": [
+    "official-port",
+    "bitbucket-cloud-status"
+  ],
+  "homepage": "https://github.com/hummerstudio/jenkins-atom-bitbucket-cloud-status"
+}

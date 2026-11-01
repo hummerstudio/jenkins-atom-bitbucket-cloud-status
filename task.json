@@ -1,0 +1,130 @@
+{
+  "atomCode": "bitbucket-cloud-status",
+  "name": "Bitbucket Cloud build status",
+  "version": "1.0.0",
+  "description": "Posts a build status to a Bitbucket Cloud commit as an OAuth consumer, then reads it back (the plugin never looked at the response).",
+  "execution": {
+    "packagePath": "bitbucket-cloud-status.jar",
+    "language": "java",
+    "target": "$atom_java_path -cp bitbucket-cloud-status.jar com.jenkinschina.atom.sdk.AtomRunner"
+  },
+  "input": {
+    "workspace": {
+      "label": "Bitbucket workspace / owner（留空从 GIT_URL 推断）",
+      "type": "vuex-input",
+      "default": ""
+    },
+    "repoSlug": {
+      "label": "仓库 slug（留空从 GIT_URL 推断）",
+      "type": "vuex-input",
+      "default": ""
+    },
+    "sha": {
+      "label": "提交 sha（留空取 GIT_COMMIT）",
+      "type": "vuex-input",
+      "default": ""
+    },
+    "state": {
+      "label": "状态：SUCCESSFUL / FAILED / INPROGRESS（留空按 BUILD_STATUS，仍为空则 INPROGRESS）",
+      "type": "vuex-input",
+      "default": ""
+    },
+    "key": {
+      "label": "构建标识 key（留空 md5(JOB_NAME#BUILD_NUMBER)）",
+      "type": "vuex-input",
+      "default": ""
+    },
+    "name": {
+      "label": "显示名（留空 JOB_NAME #BUILD_NUMBER）",
+      "type": "vuex-input",
+      "default": ""
+    },
+    "description": {
+      "label": "描述（留空不发该字段）",
+      "type": "vuex-input",
+      "default": ""
+    },
+    "buildUrl": {
+      "label": "构建链接（留空取 BUILD_URL）",
+      "type": "vuex-input",
+      "default": ""
+    },
+    "consumerKey": {
+      "label": "OAuth consumer key",
+      "type": "vuex-input",
+      "default": ""
+    },
+    "consumerSecret": {
+      "label": "OAuth consumer secret（凭据，Secret text）",
+      "type": "vuex-input",
+      "default": "",
+      "isSensitive": true
+    },
+    "accessToken": {
+      "label": "已有 access token（凭据，Secret text；给了就跳过 client_credentials 换 token）",
+      "type": "vuex-input",
+      "default": "",
+      "isSensitive": true
+    },
+    "overrideLatestBuild": {
+      "label": "只保留该 job 最新一条状态（key=md5(JOB_NAME)，name=JOB_NAME）",
+      "type": "boolean",
+      "default": "false"
+    },
+    "verifyAfterWrite": {
+      "label": "写完回读校验",
+      "type": "boolean",
+      "default": "true"
+    },
+    "apiUrl": {
+      "label": "API 根地址（默认 https://api.bitbucket.org）",
+      "type": "vuex-input",
+      "default": ""
+    },
+    "tokenUrl": {
+      "label": "token 端点（默认 https://bitbucket.org/site/oauth2/access_token）",
+      "type": "vuex-input",
+      "default": ""
+    }
+  },
+  "output": {
+    "status": {
+      "type": "string",
+      "description": "HTTP 状态码"
+    },
+    "state": {
+      "type": "string",
+      "description": "上报的状态"
+    },
+    "key": {
+      "type": "string",
+      "description": "实际发送的 key"
+    },
+    "apiUrl": {
+      "type": "string",
+      "description": "实际调用的地址"
+    },
+    "verified": {
+      "type": "string",
+      "description": "回读到的状态，未回读为 not-checked"
+    },
+    "repo": {
+      "type": "string",
+      "description": "owner/repo"
+    },
+    "tokenSource": {
+      "type": "string",
+      "description": "access-token 或 client-credentials"
+    }
+  },
+  "x-jenkins": {
+    "protocol": "jenkins-1",
+    "requires": {
+      "runner": ">=0.4.0"
+    },
+    "secrets": {
+      "consumerSecret": "",
+      "accessToken": ""
+    }
+  }
+}
