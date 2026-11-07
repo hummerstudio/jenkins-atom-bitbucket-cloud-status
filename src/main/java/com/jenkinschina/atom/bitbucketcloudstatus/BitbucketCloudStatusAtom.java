@@ -353,7 +353,15 @@ public class BitbucketCloudStatusAtom implements AtomTask {
         return out.toString();
     }
 
-    /** {@code DigestUtils.md5Hex}, which is what the plugin uses to build its keys. */
+    /**
+     * {@code DigestUtils.md5Hex}, which is what the plugin uses to build its keys.
+     *
+     * <p>MD5 is not a security control here: the digest is only the status {@code key}, and it has to stay
+     * byte-identical to what {@code bitbucket-build-status-notifier} computes, so a status posted by the plugin and
+     * one posted by this atom address the same record on the commit instead of showing up as two builds. The 32 hex
+     * characters also fit Bitbucket's 40-character {@code key} limit, which a 64-character SHA-256 hex would not,
+     * and the value neither signs nor hides anything.
+     */
     static String md5(String text) {
         try {
             byte[] digest = MessageDigest.getInstance("MD5").digest(text.getBytes(StandardCharsets.UTF_8));
