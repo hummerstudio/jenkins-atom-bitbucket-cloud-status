@@ -37,4 +37,4 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: bitbucket-cloud-status-atom
-          path: atom/dist/bitbucket-cloud-status/
+          path: atom/target/dist/bitbucket-cloud-status/
