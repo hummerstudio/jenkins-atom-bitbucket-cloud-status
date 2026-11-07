@@ -88,7 +88,7 @@ def main():
                 print(f"ok {mutation['name']}: red on {found[0]} — {line.strip()[:120]}", flush=True)
     finally:
         open(SOURCE, "w", encoding="utf-8").write(original)
-    build = subprocess.run(["./build.sh"], cwd=ROOT, capture_output=True, text=True)
+    build = subprocess.run(["mvn", "-q", "-B", "-ntp", "-DskipTests", "package"], cwd=ROOT, capture_output=True, text=True)
     if build.returncode != 0:
         failures.append("the restored source does not build: " + build.stderr[-400:])
     if failures:

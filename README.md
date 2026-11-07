@@ -55,9 +55,8 @@ Read out of the jar (`WEB-INF/lib/bitbucket-build-status-notifier.jar`, 1.4.2, 2
 ## 构建与验证
 
 ```bash
-./build.sh
-./tools/smoke.sh
-python3 tools/mutations.py
+mvn verify                      # 编译、打包，再跑 src/test/java/atom/BitbucketCloudStatusIT.java（每个场景一个假服务器）
+python3 tools/mutations.py      # 变异脚本仍在，但它调用的 build.sh/smoke.sh 已由 mvn verify 取代，需改造后才能跑
 ```
 
 `tools/fake_bitbucket_cloud.py` 是按协议重写的 Bitbucket Cloud：它自己校验路径、`Basic` 里的 consumer、表单
